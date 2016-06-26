@@ -3,6 +3,7 @@ package com.padc.aml.jokes.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.padc.aml.jokes.R;
+import com.padc.aml.jokes.data.models.JokeModel;
+import com.padc.aml.jokes.data.vos.JokeVO;
 
 import org.w3c.dom.Text;
 
@@ -29,10 +32,15 @@ public class ViewFragment extends Fragment {
     private static final String ARG_IMAGE_ID = "imageId";
     private static final String ARG_CONTENT = "content";
 
+    private static final String BARG_JOKE_INDEX = "jokeIndex";
+
     // TODO: Rename and change types of parameters
     private String mTitle;
     private int mImageId;
     private String mContent;
+
+    private int jokeIndex;
+    private JokeVO joke;
 
     private OnFragmentInteractionListener mListener;
 
@@ -40,6 +48,7 @@ public class ViewFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /*
     public static ViewFragment newInstance(String title, int imageId, String content) {
         ViewFragment fragment = new ViewFragment();
         Bundle args = new Bundle();
@@ -49,14 +58,30 @@ public class ViewFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+    */
+
+    public static ViewFragment newInstance(int jokeIndex) {
+        ViewFragment fragment = new ViewFragment();
+        Bundle args = new Bundle();
+        args.putInt(BARG_JOKE_INDEX, jokeIndex);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
         if (getArguments() != null) {
             mTitle = getArguments().getString(ARG_TITLE);
             mImageId = getArguments().getInt(ARG_IMAGE_ID);
             mContent = getArguments().getString(ARG_CONTENT);
+        }
+        */
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            jokeIndex = bundle.getInt(BARG_JOKE_INDEX);
+            joke = JokeModel.getInstance().getJoke(jokeIndex);
         }
     }
 
@@ -70,9 +95,15 @@ public class ViewFragment extends Fragment {
         final TextView tvContent = (TextView)view.findViewById(R.id.tvContent);
         final ImageView imgContent = (ImageView)view.findViewById(R.id.imgContent);
 
+        /*
         tvTitle.setText(mTitle);
         imgContent.setImageResource(mImageId);
         tvContent.setText(mContent);
+        */
+        tvTitle.setText(joke.getJokeTitle());
+        imgContent.setImageResource(joke.getJokeImage());
+        tvContent.setText(joke.getJokeContent());
+
         return view;
     }
 

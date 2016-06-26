@@ -6,7 +6,7 @@ import android.content.Context;
 /**
  * Created by user on 6/25/2016.
  */
-public class JokesApp extends Application {
+public class JokeTellerApp extends Application {
     private static Context context;
 
     @Override

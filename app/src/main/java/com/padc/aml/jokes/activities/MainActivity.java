@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.padc.aml.jokes.R;
 import com.padc.aml.jokes.fragments.ViewFragment;
+import com.padc.aml.jokes.utils.JokeTellerConstants;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ViewFragment.ControllerView {
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private int mPageNo = 0;
+    private int jokeIndex = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,30 +50,33 @@ public class MainActivity extends AppCompatActivity
         btnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showJokeContent(mPageNo--);
+                jokeIndex--;showJokeContent();
             }
         });
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showJokeContent(mPageNo++);
+                jokeIndex++;showJokeContent();
             }
         });
 
         if (savedInstanceState == null) {
-            showJokeContent(mPageNo++);
+            jokeIndex++;showJokeContent();
         }
     }
 
-    private void showJokeContent(int pageNo){
-        if(pageNo > 3) {
-            mPageNo = 0;
+    private void showJokeContent(){
+        if(jokeIndex >= JokeTellerConstants.TOTAL_JOKES) {
+            jokeIndex = JokeTellerConstants.TOTAL_JOKES - 1;
+            Toast.makeText(getApplicationContext(), R.string.msg_no_more_joke, Toast.LENGTH_SHORT).show();
         }
-        else if(pageNo < 1 ){
-            mPageNo = 2;
+        else if (jokeIndex < 0){
+            jokeIndex = 0;
+            Toast.makeText(getApplicationContext(), R.string.msg_no_more_joke, Toast.LENGTH_SHORT).show();
         }
-
+        else {
+        /*
         String title = "";
         String content = "";
         int imageId = 0;
@@ -95,11 +99,13 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
         ViewFragment fragment = ViewFragment.newInstance(title, imageId, content);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fl_container, fragment)
-                .commit();
-        ;
+        */
+            ViewFragment fragment = ViewFragment.newInstance(jokeIndex);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fl_container, fragment)
+                    .commit();
+        }
     }
 
     @Override

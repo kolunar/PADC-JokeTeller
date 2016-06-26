@@ -39,13 +39,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/joke_funny" />
+                android:text="@string/lbl_funny" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/joke_very_funny" />
+                android:text="@string/lbl_very_funny" />
         </RadioGroup>
 
         <LinearLayout
@@ -57,14 +57,14 @@
                 android:id="@+id/btn_Previous"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
-                android:text="@string/joke_show_previous"
+                android:text="@string/lbl_previous_joke"
                 android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/btn_Next"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
-                android:text="@string/joke_show_next"
+                android:text="@string/lbl_next_joke"
                 android:textAllCaps="false" />
         </LinearLayout>
     </LinearLayout>
